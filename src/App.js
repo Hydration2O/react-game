@@ -1,23 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import upgradeData from "./data/upgradeData";
+import Upgrade from "./components/upgrade";
 
 function App() {
+  const [counter, setcounter] = useState(0);
+  const increment = (num) => {
+    return (num += 1);
+  };
+  const pay = (num, cost) => {
+    return (num -= cost);
+  };
+
+ 
+
+  const upgradeList = upgradeData.map((elem) => {
+    if(counter>=elem.cost){
+      return <Upgrade
+      setcounter={setcounter}
+      counter={counter}
+      pay={pay}
+      myUpgrades={elem}
+    />
+    }
+    
+  }
+   
+  );
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <h1>{counter}</h1>
+        <button
+          className="mainButton"
+          onClick={(event) => {
+            setcounter(increment);
+          }}
         >
-          Learn React
-        </a>
+          make a webSite
+        </button>
       </header>
+      <div className="upgradeButtons">
+        {upgradeList}
+      </div>
     </div>
   );
 }
